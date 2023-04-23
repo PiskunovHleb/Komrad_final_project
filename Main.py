@@ -17,8 +17,10 @@ def welcome(message):
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton("🎲 Подбор")
     item2 = types.KeyboardButton("💬 Заполнить анкету")
+    item3 = types.KeyboardButton("▶ Музыка для игры")
+    item4 = types.KeyboardButton("📋 Моя анкета")
 
-    markup.add(item1, item2)
+    markup.add(item1, item2, item3, item4)
 
     bot.send_message(message.chat.id,
                      "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, "
@@ -68,6 +70,22 @@ def keyBoard(message):
                 bot.send_message(message.chat.id, f'Вы заполнили анкету')
                 zxc = False
                 print(Pep_Char, message.from_user.username)
+        if message.text == '▶ Музыка для игры':
+            markup = types.InlineKeyboardMarkup()
+            btn1 = types.InlineKeyboardButton(text='Фонк', url='https://youtu.be/k9RU4uW0kSY')
+            btn2 = types.InlineKeyboardButton(text='Спокойная музыка', url='https://youtu.be/TiK_u2-SQDQ')
+            btn3 = types.InlineKeyboardButton(text='Для дотеров', url='https://youtu.be/CP1K9MW7cfg')
+            btn4 = types.InlineKeyboardButton(text='Майнкрафт музыка', url='https://youtu.be/oKIZfBRO8ug')
+            btn5 = types.InlineKeyboardButton(text='?', url='https://youtu.be/dQw4w9WgXcQ')
+            markup.add(btn1, btn2, btn3, btn4, btn5)
+            bot.send_message(message.from_user.id, "Музыка на любой вкус для комфортной игры", reply_markup=markup)
+        if message.text == '📋 Моя анкета':
+            bot.send_message(message.from_user.id,
+                             f'Ваша анкета:\n{ch_1.get_about(user_id=message.from_user.username)}')
+            bot.send_message(message.from_user.id,
+                             f'Количество лайков: {ch_1.get_like(user_id=message.from_user.username)}')
+            bot.send_message(message.from_user.id,
+                             f'Количество дизлайков:{ch_1.get_dislike(user_id=message.from_user.username)}')
 
 
 @bot.callback_query_handler(func=lambda call: True)

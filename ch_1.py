@@ -60,3 +60,13 @@ def get_dislike(user_id: str):
     else:
         return info[4]
 
+
+def get_about(user_id: str):
+    cursor.execute('SELECT * FROM alb WHERE user_id = ?', (user_id,))
+    info = cursor.fetchone()
+    if info is None:
+        print(f'нет такого пользователя: {user_id}')
+        return None
+    else:
+        return info[2]
+
